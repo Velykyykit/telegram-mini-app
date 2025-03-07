@@ -5,7 +5,6 @@
   <title>Каталог кусів</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    /* Стилі, що наближені до Telegram (світла тема) */
     body {
       margin: 0;
       font-family: sans-serif;
@@ -40,42 +39,37 @@
   <div class="container">
     <h1>Каталог кусів</h1>
     <div id="catalog">
-      <!-- Каталог буде сформований JavaScript-ом -->
+      <p>Завантаження...</p>
     </div>
   </div>
 
   <script>
-    // Ініціалізація Telegram Mini App API
-    const tg = window.Telegram.WebApp;
-    tg.expand(); // Розгорнути додаток на весь доступний простір
+    const apiUrl = "https://your-bot-server.com/api/get_courses"; // Змініть на ваш сервер
 
-    // Дані каталогу (логіка з вашого бота, крім order.py)
-    const catalogData = [
-      { id: 1, name: "Кус 1", description: "Смачний кус з якісних інгредієнтів", price: 100 },
-      { id: 2, name: "Кус 2", description: "Свіжий та ароматний", price: 150 },
-      { id: 3, name: "Кус 3", description: "Найкращий вибір для поціновувачів", price: 200 }
-      // Додайте інші елементи за потребою
-    ];
+    async function fetchCatalog() {
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const catalogDiv = document.getElementById("catalog");
+        catalogDiv.innerHTML = ""; 
 
-    // Функція для відображення каталогу
-    function renderCatalog() {
-      const catalogDiv = document.getElementById("catalog");
-      catalogData.forEach(item => {
-        const itemDiv = document.createElement("div");
-        itemDiv.className = "catalog-item";
-        itemDiv.innerHTML = `
-          <h2>${item.name}</h2>
-          <p>${item.description}</p>
-          <p><strong>Ціна:</strong> ${item.price} грн</p>
-        `;
-        catalogDiv.appendChild(itemDiv);
-      });
+        data.courses.forEach(item => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "catalog-item";
+          itemDiv.innerHTML = `
+            <h2>${item.name}</h2>
+            <p>${item.description}</p>
+            <p><strong>Ціна:</strong> ${item.price} грн</p>
+          `;
+          catalogDiv.appendChild(itemDiv);
+        });
+      } catch (error) {
+        console.error("Помилка отримання каталогу:", error);
+        document.getElementById("catalog").innerHTML = "<p>Помилка завантаження</p>";
+      }
     }
 
-    // Виклик функції для формування каталогу
-    renderCatalog();
+    fetchCatalog();
   </script>
 </body>
 </html>
-
-<!-- Force rebuild -->
