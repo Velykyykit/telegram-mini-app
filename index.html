@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Каталог кусів</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Стилі, що наближені до Telegram (світла тема) */
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f7f7f7;
+      color: #000;
+    }
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .catalog-item {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .catalog-item h2 {
+      margin: 0 0 10px 0;
+    }
+    .catalog-item p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Каталог кусів</h1>
+    <div id="catalog">
+      <!-- Каталог буде сформований JavaScript-ом -->
+    </div>
+  </div>
+
+  <script>
+    // Ініціалізація Telegram Mini App API
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Розгорнути додаток на весь доступний простір
+
+    // Дані каталогу (логіка з вашого бота, крім order.py)
+    const catalogData = [
+      { id: 1, name: "Кус 1", description: "Смачний кус з якісних інгредієнтів", price: 100 },
+      { id: 2, name: "Кус 2", description: "Свіжий та ароматний", price: 150 },
+      { id: 3, name: "Кус 3", description: "Найкращий вибір для поціновувачів", price: 200 }
+      // Додайте інші елементи за потребою
+    ];
+
+    // Функція для відображення каталогу
+    function renderCatalog() {
+      const catalogDiv = document.getElementById("catalog");
+      catalogData.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "catalog-item";
+        itemDiv.innerHTML = `
+          <h2>${item.name}</h2>
+          <p>${item.description}</p>
+          <p><strong>Ціна:</strong> ${item.price} грн</p>
+        `;
+        catalogDiv.appendChild(itemDiv);
+      });
+    }
+
+    // Виклик функції для формування каталогу
+    renderCatalog();
+  </script>
+</body>
+</html>
